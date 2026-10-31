@@ -12,8 +12,8 @@ cmake-build-*/
 *.log
 *.trace
 *.out
-traces/
-results/
+/traces/
+/results/
 
 # Python
 __pycache__/
@@ -29,4 +29,8 @@ venv/
 
 # DynamoRIO local installation or generated client output
 DynamoRIO-*/
-dynamorio/
+/dynamorio/
+
+# Lab 1 generated traces and analysis results
+lab01-instruction-profiling/traces/
+lab01-instruction-profiling/results/

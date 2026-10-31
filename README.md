@@ -8,7 +8,7 @@
 [![Tooling](https://img.shields.io/badge/instrumentation-DynamoRIO-2F6DB0.svg)](docs/dynamorio-introduction.md)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
-uARCH is a hands-on Advanced Computer Architecture lab for M.Tech students, architecture students, systems researchers, and anyone curious about how real programs execute on modern processors. The repository provides environment setup, small workloads, reusable scaffolding, and guided lab templates. The instrumentation exercises themselves will be added in later iterations.
+uARCH is a hands-on Advanced Computer Architecture lab for M.Tech students, architecture students, systems researchers, and anyone curious about how real programs execute on modern processors. The repository provides environment setup, small workloads, reusable scaffolding, and a completed first tracing exercise. Labs 2-4 will be added in later iterations.
 
 > **Instrument -> Observe -> Analyze -> Model -> Understand**
 
@@ -39,7 +39,7 @@ By the end of the lab, students should be able to:
 
 | Lab | Focus | Status |
 | --- | --- | --- |
-| [01 - Instruction Profiling](lab01-instruction-profiling/README.md) | Dynamic instruction counts, instruction classes, basic blocks, and hot code | Template |
+| [01 - Instruction Profiling](lab01-instruction-profiling/README.md) | Student-driven dynamic instruction tracing and workload analysis | Guided investigation |
 | [02 - Branch Prediction](lab02-branch-prediction/README.md) | Branch traces and always-taken, 1-bit, and 2-bit predictors | Template |
 | [03 - Cache Locality](lab03-cache-locality/README.md) | `drcachesim`, cache configurations, and locality | Template |
 | [04 - Dynamic ILP](lab04-dynamic-ilp/README.md) | Operands, dependencies, critical paths, and ideal issue width | Template |
@@ -68,14 +68,14 @@ cd uARCH
 ./test.sh
 ```
 
-`DYNAMORIO_HOME` can be set to use an existing custom installation. See [installation](docs/installation.md), [getting started](docs/getting-started.md), and [troubleshooting](docs/troubleshooting.md) for details. The current setup validates prerequisites and creates only local workspace directories; it does not implement the labs.
+`DYNAMORIO_HOME` can be set to use an existing custom installation. See [installation](docs/installation.md), [getting started](docs/getting-started.md), and [troubleshooting](docs/troubleshooting.md) for details. The current setup validates prerequisites and creates local workspace directories; Lab 1 uses the official `instrace_simple` sample, while Labs 2-4 remain templates.
 
 ## Repository Layout
 
 ```text
 common/                       Shared future client/build infrastructure
 workloads/                    Small workload categories and placeholders
-lab01-instruction-profiling/  Lab 1 learning materials and future starter code
+lab01-instruction-profiling/  Lab 1 README, analyser scaffold, questions, and workloads
 lab02-branch-prediction/     Lab 2 learning materials and future starter code
 lab03-cache-locality/        Lab 3 configuration and analysis placeholders
 lab04-dynamic-ilp/           Lab 4 learning materials and future starter code
