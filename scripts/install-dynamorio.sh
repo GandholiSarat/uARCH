@@ -5,52 +5,17 @@ ROOT_DIR="$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)"
 VERSION_FILE="$ROOT_DIR/dynamorio-version.txt"
 
 if [ ! -f "$VERSION_FILE" ]; then
-    printf 'Missing pinned release file: %s\n' "$VERSION_FILE" >&2
+    printf 'Missing release configuration: %s\n' "$VERSION_FILE" >&2
     exit 1
 fi
 # shellcheck disable=SC1090
 . "$VERSION_FILE"
-
-: "${DYNAMORIO_RELEASE_TAG:?Missing DYNAMORIO_RELEASE_TAG}"
-: "${DYNAMORIO_RELEASE_VERSION:?Missing DYNAMORIO_RELEASE_VERSION}"
-: "${DYNAMORIO_RELEASE_BASE_URL:?Missing DYNAMORIO_RELEASE_BASE_URL}"
+: "${DYNAMORIO_RELEASE_API_URL:?Missing DYNAMORIO_RELEASE_API_URL}"
 
 fail() {
     printf 'DynamoRIO installation failed: %s\n' "$1" >&2
     exit 1
 }
-
-if [ "$(uname -s)" != Linux ]; then
-    if [ -n "${DYNAMORIO_HOME:-}" ] &&
-        [ -x "$DYNAMORIO_HOME/bin64/drrun" ] &&
-        [ -f "$DYNAMORIO_HOME/tools/drcachesim.drrun64" ] &&
-        [ -f "$DYNAMORIO_HOME/cmake/DynamoRIOConfig.cmake" ] &&
-        [ -f "$DYNAMORIO_HOME/include/dr_api.h" ] &&
-        [ -f "$DYNAMORIO_HOME/lib64/release/libdynamorio.so" ]; then
-        printf 'Using existing DynamoRIO installation at %s\n' "$DYNAMORIO_HOME"
-        exit 0
-    fi
-    fail "automatic installation currently targets Linux; set DYNAMORIO_HOME to a custom installation"
-fi
-
-machine_arch="$(uname -m)"
-case "$machine_arch" in
-    x86_64|amd64)
-        asset="${DYNAMORIO_LINUX_X86_64_ASSET:?Missing x86-64 asset}"
-        checksum="${DYNAMORIO_LINUX_X86_64_SHA256:?Missing x86-64 checksum}"
-        ;;
-    aarch64|arm64)
-        fail "AArch64 is detected but not enabled yet; add a verified AArch64 asset and checksum before using it"
-        ;;
-    *)
-        fail "unsupported Linux architecture: $machine_arch"
-        ;;
-esac
-
-archive_root="DynamoRIO-Linux-${DYNAMORIO_RELEASE_VERSION}"
-install_root="${UARCH_DYNAMORIO_ROOT:-$HOME/.uarch/dynamorio}"
-install_dir="$install_root/$archive_root"
-current_link="$install_root/current"
 
 valid_installation() {
     [ -x "$1/bin64/drrun" ] &&
@@ -77,13 +42,22 @@ if [ -n "${DYNAMORIO_HOME:-}" ]; then
     fail "DYNAMORIO_HOME does not contain the expected package layout: $DYNAMORIO_HOME"
 fi
 
-if valid_installation "$install_dir"; then
-    ln -sfn "$install_dir" "$current_link"
-    write_environment_file
-    printf 'DynamoRIO %s is already installed at %s\n' "$DYNAMORIO_RELEASE_VERSION" "$install_dir"
-    printf 'Environment file: %s/env.sh\n' "$install_root"
-    exit 0
+if [ "$(uname -s)" != Linux ]; then
+    fail "automatic installation currently targets Linux; set DYNAMORIO_HOME to a custom installation"
 fi
+
+machine_arch="$(uname -m)"
+case "$machine_arch" in
+    x86_64|amd64)
+        asset_pattern='DynamoRIO-Linux-*.tar.gz'
+        ;;
+    aarch64|arm64)
+        fail "AArch64 is detected but not enabled yet; add verified AArch64 asset handling before using it"
+        ;;
+    *)
+        fail "unsupported Linux architecture: $machine_arch"
+        ;;
+esac
 
 if command -v curl >/dev/null 2>&1; then
     downloader=curl
@@ -93,6 +67,9 @@ else
     fail 'curl or wget is required; install one with: sudo apt install curl'
 fi
 
+if ! command -v python3 >/dev/null 2>&1; then
+    fail 'python3 is required to read the official release metadata'
+fi
 if command -v sha256sum >/dev/null 2>&1; then
     checksum_tool=sha256sum
 elif command -v shasum >/dev/null 2>&1; then
@@ -101,19 +78,70 @@ else
     fail 'sha256sum or shasum is required to verify the official archive'
 fi
 
-mkdir -p "$install_root"
-# Keep archive extraction off shared folders such as mounted /Users paths.
+install_root="${UARCH_DYNAMORIO_ROOT:-$HOME/.uarch/dynamorio}"
 temporary_root="${UARCH_DYNAMORIO_TMPDIR:-/tmp}"
 if [ ! -d "$temporary_root" ] || [ ! -w "$temporary_root" ]; then
     fail "temporary directory is not writable: $temporary_root (set UARCH_DYNAMORIO_TMPDIR to a native Linux path)"
 fi
+mkdir -p "$install_root"
 temporary_dir="$(mktemp -d "$temporary_root/uarch-dynamorio.XXXXXX")"
 cleanup() { rm -rf "$temporary_dir"; }
 trap cleanup EXIT
-archive_path="$temporary_dir/$asset"
-url="$DYNAMORIO_RELEASE_BASE_URL/$DYNAMORIO_RELEASE_TAG/$asset"
 
-printf 'Downloading official DynamoRIO %s for Linux %s...\n' "$DYNAMORIO_RELEASE_VERSION" "$machine_arch"
+metadata_path="$temporary_dir/latest.json"
+if [ "$downloader" = curl ]; then
+    curl --fail --location --retry 3 --proto '=https' --tlsv1.2 \
+        -H 'Accept: application/vnd.github+json' \
+        --output "$metadata_path" "$DYNAMORIO_RELEASE_API_URL"
+else
+    wget --https-only --output-document="$metadata_path" "$DYNAMORIO_RELEASE_API_URL"
+fi
+
+release_data="$(python3 - "$metadata_path" "$asset_pattern" <<'PY'
+import json
+import sys
+
+metadata_path, asset_pattern = sys.argv[1:]
+with open(metadata_path, encoding="utf-8") as metadata_file:
+    release = json.load(metadata_file)
+
+candidates = [
+    asset for asset in release.get("assets", [])
+    if asset.get("name", "").startswith("DynamoRIO-Linux-")
+    and asset.get("name", "").endswith(".tar.gz")
+]
+if not candidates:
+    raise SystemExit("no official Linux DynamoRIO archive found in latest release")
+asset = candidates[0]
+digest = asset.get("digest", "")
+if not digest.startswith("sha256:"):
+    raise SystemExit(f"latest asset has no official SHA-256 digest: {asset['name']}")
+name = asset["name"]
+prefix = "DynamoRIO-Linux-"
+suffix = ".tar.gz"
+version = name[len(prefix):-len(suffix)]
+print("\t".join((release["tag_name"], version, name, digest.removeprefix("sha256:"), asset["browser_download_url"])))
+PY
+)" || fail "could not parse latest DynamoRIO release metadata"
+
+IFS=$'\t' read -r release_tag release_version asset checksum url <<EOF
+$release_data
+EOF
+archive_root="DynamoRIO-Linux-${release_version}"
+install_dir="$install_root/$archive_root"
+current_link="$install_root/current"
+
+if valid_installation "$install_dir"; then
+    ln -sfn "$install_dir" "$current_link"
+    write_environment_file
+    printf 'DynamoRIO %s is already installed at %s\n' "$release_version" "$install_dir"
+    printf 'Environment file: %s/env.sh\n' "$install_root"
+    exit 0
+fi
+
+archive_path="$temporary_dir/$asset"
+printf 'Latest official DynamoRIO release: %s (%s)\n' "$release_tag" "$release_version"
+printf 'Downloading for Linux %s...\n' "$machine_arch"
 if [ "$downloader" = curl ]; then
     curl --fail --location --retry 3 --proto '=https' --tlsv1.2 --output "$archive_path" "$url"
 else
@@ -124,7 +152,7 @@ actual_checksum="$(if [ "$checksum_tool" = sha256sum ]; then sha256sum "$archive
 if [ "$actual_checksum" != "$checksum" ]; then
     fail "checksum mismatch for $asset (expected $checksum, got $actual_checksum)"
 fi
-printf 'Checksum verified: %s\n' "$actual_checksum"
+printf 'Official SHA-256 verified: %s\n' "$actual_checksum"
 
 extract_dir="$temporary_dir/extracted"
 mkdir -p "$extract_dir"
@@ -142,5 +170,5 @@ mv "$extract_dir/$archive_root" "$install_dir"
 ln -sfn "$install_dir" "$current_link"
 write_environment_file
 
-printf 'Installed DynamoRIO %s at %s\n' "$DYNAMORIO_RELEASE_VERSION" "$install_dir"
+printf 'Installed latest DynamoRIO %s at %s\n' "$release_version" "$install_dir"
 printf 'Environment file: %s/env.sh\n' "$install_root"

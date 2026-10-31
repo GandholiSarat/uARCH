@@ -26,7 +26,7 @@ Read the official resources first:
 - [DynamoRIO API samples documentation](https://dynamorio.org/API_samples.html)
 - [`instrace_simple.c`](https://github.com/DynamoRIO/dynamorio/blob/master/api/samples/instrace_simple.c)
 
-The repository pins a release in the root `dynamorio-version.txt`. Set up the environment from the repository root, then return here:
+The repository resolves the latest official release through the root `dynamorio-version.txt` configuration. Set up the environment from the repository root, then return here:
 
 ```bash
 cd ..
@@ -37,7 +37,7 @@ cd lab01-instruction-profiling
 
 ## Before You Start
 
-Use 64-bit Ubuntu Linux, the pinned DynamoRIO environment, GCC, CMake, Make, and Python 3.
+Use 64-bit Ubuntu Linux, the latest official DynamoRIO environment, GCC, CMake, Make, and Python 3.
 
 ## What the Trace Contains
 
@@ -78,14 +78,15 @@ You may write a custom C workload when it gives you a better performance questio
 
 ## Run
 
-The sample source is maintained by DynamoRIO, so you can inspect and build it directly from the official repository. Use the same pinned tag as the repository setup:
+The sample source is maintained by DynamoRIO, so you can inspect and build it directly from the official repository. Use the latest release tag resolved by the official Releases API:
 
 ```bash
 export DYNAMORIO_HOME="$HOME/.uarch/dynamorio/current"
 export DR_SOURCE="$HOME/src/dynamorio"
 export DR_BUILD="$HOME/build/dynamorio-samples"
+export DR_TAG="$(curl -fsSL https://api.github.com/repos/DynamoRIO/dynamorio/releases/latest | python3 -c 'import json, sys; print(json.load(sys.stdin)["tag_name"])')"
 
-git clone --branch cronbuild-11.91.20756 --depth 1 \
+git clone --branch "$DR_TAG" --depth 1 \
     https://github.com/DynamoRIO/dynamorio.git "$DR_SOURCE"
 cmake -S "$DR_SOURCE/api/samples" -B "$DR_BUILD" \
     -DDynamoRIO_DIR="$DYNAMORIO_HOME/cmake"

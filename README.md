@@ -55,13 +55,13 @@ The lab connects execution traces with dynamic instruction mix, basic blocks, ho
 - Basic C/C++ and command-line experience.
 - Familiarity with compilation and processes.
 - A 64-bit Ubuntu Linux system is the primary target.
-- GCC/G++, CMake, Make, Python 3, Git, curl, and the pinned official DynamoRIO package installed by setup.
+- GCC/G++, CMake, Make, Python 3, Git, curl, and the latest official DynamoRIO package installed by setup.
 
 macOS and other Unix-like systems may work for parts of the repository, but the lab scripts and examples are validated primarily on Ubuntu Linux. Windows users should use a Linux virtual machine or WSL2 and verify DynamoRIO compatibility there.
 
 ## Installation and First Run
 
-The default setup uses the pinned official DynamoRIO prebuilt package recorded in `dynamorio-version.txt`. It does not clone DynamoRIO source, build it, or fetch an unpinned latest release:
+The default setup uses the latest official DynamoRIO prebuilt package resolved through the GitHub Releases API. It does not clone DynamoRIO source or build it:
 
 ```bash
 git clone https://github.com/GandholiSarat/uARCH.git

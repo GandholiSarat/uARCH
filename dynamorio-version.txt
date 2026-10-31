@@ -1,7 +1,3 @@
-# Official DynamoRIO release pinned by the uARCH environment setup.
-# Update this file deliberately when changing the supported release.
-DYNAMORIO_RELEASE_TAG=cronbuild-11.91.20756
-DYNAMORIO_RELEASE_VERSION=11.91.20756
-DYNAMORIO_RELEASE_BASE_URL=https://github.com/DynamoRIO/dynamorio/releases/download
-DYNAMORIO_LINUX_X86_64_ASSET=DynamoRIO-Linux-11.91.20756.tar.gz
-DYNAMORIO_LINUX_X86_64_SHA256=016f6854f57c8c510aaffa9d4d8c4b4bebbea43d1fd03a4e9eeaac6bbd2abb76
+# Official DynamoRIO release source used by uARCH setup.
+# The installer resolves the current latest release at setup time.
+DYNAMORIO_RELEASE_API_URL=https://api.github.com/repos/DynamoRIO/dynamorio/releases/latest

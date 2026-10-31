@@ -15,7 +15,7 @@ cd uARCH
 ./test.sh
 ```
 
-The default setup downloads one pinned official DynamoRIO prebuilt release. It does not clone or build DynamoRIO from source, and it does not download an unpinned latest version. The pinned tag and SHA-256 digest are recorded in `dynamorio-version.txt`.
+The default setup downloads the latest official DynamoRIO prebuilt release from the GitHub Releases API. It does not clone or build DynamoRIO from source. The release API endpoint is recorded in `dynamorio-version.txt`, and every archive is checked against GitHub's published SHA-256 digest.
 
 ```bash
 source "$HOME/.uarch/dynamorio/env.sh"
@@ -38,6 +38,6 @@ The expected installation contains `bin64/drrun`, `tools/drcachesim.drrun64`, `i
 ./test.sh
 ```
 
-A missing dependency is reported with an actionable installation hint. Setup is repeatable, verifies the archive checksum, and avoids downloading an already installed pinned release. It also creates local `build/`, `results/`, and `traces/` directories.
+A missing dependency is reported with an actionable installation hint. Setup is repeatable, verifies the archive checksum, and avoids downloading the latest release again when it is already installed. It also creates local `build/`, `results/`, and `traces/` directories.
 
 For source-based development of unreleased DynamoRIO features, see [upstream development](upstream-development.md).
