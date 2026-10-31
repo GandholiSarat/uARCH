@@ -30,6 +30,8 @@ if [ "$dynamorio_status" -eq 0 ]; then
 		export DYNAMORIO_HOME="$HOME/.uarch/dynamorio/current"
 	fi
 	export PATH="$DYNAMORIO_HOME/bin64:$PATH"
+	printf 'DynamoRIO home: %s\n' "$DYNAMORIO_HOME"
+	printf 'drrun: %s/bin64/drrun\n' "$DYNAMORIO_HOME"
 	"$ROOT_DIR/scripts/check-dynamorio.sh" || dynamorio_status=$?
 fi
 
