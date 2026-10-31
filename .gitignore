@@ -1,0 +1,32 @@
+# Build output
+build/
+cmake-build-*/
+*.o
+*.a
+*.so
+*.dylib
+*.dll
+*.exe
+
+# Runtime output
+*.log
+*.trace
+*.out
+traces/
+results/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Local configuration
+.env
+.DS_Store
+.vscode/
+.idea/
+
+# DynamoRIO local installation or generated client output
+DynamoRIO-*/
+dynamorio/

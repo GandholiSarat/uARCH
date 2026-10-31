@@ -1,0 +1,2 @@
+# No third-party Python packages are required for the repository foundation.
+# Future trace analysis labs should pin dependencies here when introduced.
