@@ -15,7 +15,7 @@ if [ "$dependency_status" -eq 0 ]; then
 	if [ -n "${DYNAMORIO_HOME:-}" ]; then
 		printf 'Using custom DynamoRIO installation from DYNAMORIO_HOME.\n'
 	else
-		"$ROOT_DIR/scripts/install-dynamorio.sh" || dynamorio_status=$?
+		bash "$ROOT_DIR/scripts/install-dynamorio.sh" || dynamorio_status=$?
 		if [ "$dynamorio_status" -ne 0 ]; then
 			printf '[FAIL] DynamoRIO installation. See docs/troubleshooting.md.\n'
 		fi
