@@ -21,8 +21,8 @@ check_dynamorio() { DYNAMORIO_QUIET=1 "$ROOT_DIR/scripts/check-dynamorio.sh"; }
 resolve_dynamorio_home() {
     if [ -n "${DYNAMORIO_HOME:-}" ]; then
         printf '%s\n' "$DYNAMORIO_HOME"
-    elif [ -d "$HOME/.uarch/dynamorio/current" ]; then
-        printf '%s\n' "$HOME/.uarch/dynamorio/current"
+    elif [ -d "$ROOT_DIR/.uarch/dynamorio/current" ]; then
+        printf '%s\n' "$ROOT_DIR/.uarch/dynamorio/current"
     else
         return 1
     fi

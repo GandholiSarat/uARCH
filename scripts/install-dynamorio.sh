@@ -78,10 +78,11 @@ else
     fail 'sha256sum or shasum is required to verify the official archive'
 fi
 
-install_root="${UARCH_DYNAMORIO_ROOT:-$HOME/.uarch/dynamorio}"
-temporary_root="${UARCH_DYNAMORIO_TMPDIR:-/tmp}"
+install_root="${UARCH_DYNAMORIO_ROOT:-$ROOT_DIR/.uarch/dynamorio}"
+temporary_root="${UARCH_DYNAMORIO_TMPDIR:-$ROOT_DIR/.uarch/tmp}"
+mkdir -p "$temporary_root"
 if [ ! -d "$temporary_root" ] || [ ! -w "$temporary_root" ]; then
-    fail "temporary directory is not writable: $temporary_root (set UARCH_DYNAMORIO_TMPDIR to a native Linux path)"
+    fail "temporary directory is not writable: $temporary_root"
 fi
 mkdir -p "$install_root"
 temporary_dir="$(mktemp -d "$temporary_root/uarch-dynamorio.XXXXXX")"
@@ -157,7 +158,7 @@ printf 'Official SHA-256 verified: %s\n' "$actual_checksum"
 extract_dir="$temporary_dir/extracted"
 mkdir -p "$extract_dir"
 if ! tar -xzf "$archive_path" -C "$extract_dir"; then
-    fail "archive extraction failed; use a native Linux temporary directory with UARCH_DYNAMORIO_TMPDIR (for example /tmp)"
+    fail "archive extraction failed"
 fi
 if ! valid_installation "$extract_dir/$archive_root"; then
     fail "official archive did not contain the expected DynamoRIO layout"

@@ -81,7 +81,7 @@ You may write a custom C workload when it gives you a better performance questio
 The sample source is maintained by DynamoRIO, so you can inspect and build it directly from the official repository. Use the latest release tag resolved by the official Releases API:
 
 ```bash
-export DYNAMORIO_HOME="$HOME/.uarch/dynamorio/current"
+export DYNAMORIO_HOME="$PWD/.uarch/dynamorio/current"
 export DR_SOURCE="$HOME/src/dynamorio"
 export DR_BUILD="$HOME/build/dynamorio-samples"
 export DR_TAG="$(curl -fsSL https://api.github.com/repos/DynamoRIO/dynamorio/releases/latest | python3 -c 'import json, sys; print(json.load(sys.stdin)["tag_name"])')"
