@@ -2,8 +2,8 @@
 set -u
 
 ROOT_DIR="$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)"
-DEFAULT_DYNAMORIO_HOME="$ROOT_DIR/.uarch/dynamorio/current"
-DEFAULT_ENV_FILE="$ROOT_DIR/.uarch/dynamorio/env.sh"
+DEFAULT_DYNAMORIO_HOME="$ROOT_DIR/dynamorio"
+DEFAULT_ENV_FILE="$ROOT_DIR/dynamorio/env.sh"
 
 printf 'uARCH environment setup\n========================\n'
 printf 'Repository: %s\n\n' "$ROOT_DIR"

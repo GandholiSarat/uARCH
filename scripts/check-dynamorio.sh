@@ -12,8 +12,8 @@ fail() { [ "$quiet" = 1 ] || printf '[FAIL] %s\n' "$1"; fail_count=$((fail_count
 resolve_home() {
     if [ -n "${DYNAMORIO_HOME:-}" ]; then
         printf '%s\n' "$DYNAMORIO_HOME"
-    elif [ -d "$ROOT_DIR/.uarch/dynamorio/current" ]; then
-        printf '%s\n' "$ROOT_DIR/.uarch/dynamorio/current"
+    elif [ -d "$ROOT_DIR/dynamorio" ]; then
+        printf '%s\n' "$ROOT_DIR/dynamorio"
     else
         return 1
     fi

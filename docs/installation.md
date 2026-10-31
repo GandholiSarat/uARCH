@@ -15,10 +15,10 @@ cd uARCH
 ./test.sh
 ```
 
-The default setup downloads the latest official DynamoRIO prebuilt release from the GitHub Releases API into this repository under `.uarch/dynamorio/`. It does not clone or build DynamoRIO from source. The release API endpoint is recorded in `dynamorio-version.txt`, and every archive is checked against GitHub's published SHA-256 digest.
+The default setup downloads the latest official DynamoRIO prebuilt release from the GitHub Releases API into this repository under `dynamorio/`. It does not clone or build DynamoRIO from source. The release API endpoint is recorded in `dynamorio-version.txt`, and every archive is checked against GitHub's published SHA-256 digest.
 
 ```bash
-source "$PWD/.uarch/dynamorio/env.sh"
+source "$PWD/dynamorio/env.sh"
 ```
 
 To use an existing approved installation instead, skip the download and run:
