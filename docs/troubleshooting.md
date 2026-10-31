@@ -11,7 +11,7 @@ ls "$DYNAMORIO_HOME/include" "$DYNAMORIO_HOME/cmake"
 
 ## `drcachesim` is missing
 
-Use a DynamoRIO distribution that includes the simulator, or add its `bin64/` directory to `PATH`. Do not copy binaries from an unrelated installation. Re-run `./test.sh` after correcting the path.
+Use a DynamoRIO distribution that includes `tools/drcachesim.drrun64`. The simulator is launched through `bin64/drrun -t drcachesim`; it is not a standalone `bin64/drcachesim` executable. Do not copy binaries from an unrelated installation. Re-run `./test.sh` after correcting the path.
 
 ## CMake cannot find DynamoRIO
 

@@ -53,23 +53,22 @@ The lab connects execution traces with dynamic instruction mix, basic blocks, ho
 - Basic C/C++ and command-line experience.
 - Familiarity with compilation and processes.
 - A 64-bit Ubuntu Linux system is the primary target.
-- GCC/G++, CMake, Make, Python 3, Git, and a user-provided DynamoRIO installation.
+- GCC/G++, CMake, Make, Python 3, Git, curl, and the pinned official DynamoRIO package installed by setup.
 
 macOS and other Unix-like systems may work for parts of the repository, but the lab scripts and examples are validated primarily on Ubuntu Linux. Windows users should use a Linux virtual machine or WSL2 and verify DynamoRIO compatibility there.
 
 ## Installation and First Run
 
-The repository does not download or install arbitrary binaries. Install DynamoRIO from its official distribution or your institution's approved package, then point the repository at it:
+The default setup uses the pinned official DynamoRIO prebuilt package recorded in `dynamorio-version.txt`. It does not clone DynamoRIO source, build it, or fetch an unpinned latest release:
 
 ```bash
-git clone https://github.com/<organization>/uarch-dynamorio-workshop.git
-cd uarch-dynamorio-workshop
-export DYNAMORIO_HOME=/path/to/DynamoRIO
+git clone https://github.com/GandholiSarat/uARCH.git
+cd uARCH
 ./setup.sh
 ./test.sh
 ```
 
-`DYNAMORIO_HOME` can be placed in your shell profile for future sessions. See [installation](docs/installation.md), [getting started](docs/getting-started.md), and [troubleshooting](docs/troubleshooting.md) for details. The current setup validates prerequisites and creates only local workspace directories; it does not implement the labs.
+`DYNAMORIO_HOME` can be set to use an existing custom installation. See [installation](docs/installation.md), [getting started](docs/getting-started.md), and [troubleshooting](docs/troubleshooting.md) for details. The current setup validates prerequisites and creates only local workspace directories; it does not implement the labs.
 
 ## Repository Layout
 

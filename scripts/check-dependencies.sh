@@ -21,7 +21,14 @@ check Make make
 check Python python3
 check Git git
 
+if command -v curl >/dev/null 2>&1 || command -v wget >/dev/null 2>&1; then
+    printf '[PASS] %-8s curl or wget\n' Downloader
+else
+    printf '[FAIL] %-8s curl or wget not found\n' Downloader
+    missing=$((missing + 1))
+fi
+
 if [ "$missing" -ne 0 ]; then
-    printf '\nUbuntu: sudo apt update && sudo apt install build-essential cmake make python3 git\n'
+    printf '\nUbuntu: sudo apt update && sudo apt install build-essential cmake make python3 git curl\n'
     exit 1
 fi
