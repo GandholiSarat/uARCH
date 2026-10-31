@@ -20,3 +20,13 @@ Configure with `-DDynamoRIO_DIR="$DYNAMORIO_HOME/cmake"`. Do not point CMake at 
 ## Permission Denied
 
 Scripts are intended to be executable. Restore permissions with `chmod +x setup.sh test.sh scripts/*.sh common/scripts/*.sh`.
+
+## `tar` Reports `Function not implemented`
+
+If the repository lives on a mounted or shared filesystem such as `/Users/...`, archive extraction may fail because that filesystem does not support the required file operations. The installer extracts into native `/tmp` by default. If `/tmp` is restricted, set `UARCH_DYNAMORIO_TMPDIR` to a writable native Linux directory and rerun `./setup.sh`:
+
+```bash
+export UARCH_DYNAMORIO_TMPDIR=/tmp
+./setup.sh
+./test.sh
+```

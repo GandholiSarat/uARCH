@@ -102,7 +102,12 @@ else
 fi
 
 mkdir -p "$install_root"
-temporary_dir="$(mktemp -d "${TMPDIR:-/tmp}/uarch-dynamorio.XXXXXX")"
+# Keep archive extraction off shared folders such as mounted /Users paths.
+temporary_root="${UARCH_DYNAMORIO_TMPDIR:-/tmp}"
+if [ ! -d "$temporary_root" ] || [ ! -w "$temporary_root" ]; then
+    fail "temporary directory is not writable: $temporary_root (set UARCH_DYNAMORIO_TMPDIR to a native Linux path)"
+fi
+temporary_dir="$(mktemp -d "$temporary_root/uarch-dynamorio.XXXXXX")"
 cleanup() { rm -rf "$temporary_dir"; }
 trap cleanup EXIT
 archive_path="$temporary_dir/$asset"
@@ -123,7 +128,9 @@ printf 'Checksum verified: %s\n' "$actual_checksum"
 
 extract_dir="$temporary_dir/extracted"
 mkdir -p "$extract_dir"
-tar -xzf "$archive_path" -C "$extract_dir"
+if ! tar -xzf "$archive_path" -C "$extract_dir"; then
+    fail "archive extraction failed; use a native Linux temporary directory with UARCH_DYNAMORIO_TMPDIR (for example /tmp)"
+fi
 if ! valid_installation "$extract_dir/$archive_root"; then
     fail "official archive did not contain the expected DynamoRIO layout"
 fi
