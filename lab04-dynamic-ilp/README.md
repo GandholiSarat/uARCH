@@ -2,40 +2,43 @@
 
 **Status: Under development**
 
-## Objective
+## Mission Brief
 
-Collect dynamic instruction operands, construct dependency information, estimate critical paths, and explore idealized issue width.
+Collect dynamic operands, model dependencies, estimate critical paths, and explore idealised issue width. The objective is to reason about available instruction-level parallelism without confusing an ideal model with measured throughput.
 
-## Background
+## What You'll Explore
 
-Instructions that are independent may overlap in an ideal machine, while dependencies constrain execution. A dependency graph and critical path provide a model of available instruction-level parallelism, subject to explicitly stated simplifications.
+- Register operands and true dependencies.
+- Dependency graphs and critical paths.
+- Ideal ILP and issue-width assumptions.
+- Limits of trace-derived execution models.
 
-## Architecture Concepts
+## Before You Start
 
-Register operands, true dependencies, dependency graphs, critical paths, ideal ILP, issue width, and limits of trace-derived models.
+Complete the root setup. The finished investigation will require a DynamoRIO tracing client, operand analysis, a graph representation, and a Python analyser. This lab is not implemented yet.
 
-## Prerequisites and Tools
+## Explore
 
-Complete the root setup. Future work will require a DynamoRIO tracing client, operand analysis, a graph representation, and a Python analyzer.
+Start by defining the operand schema and dependency rules. Decide how loads, stores, control flow, and unknown latency should be represented before building a graph.
 
-## Experiment Overview
+## Build and Run
 
-TODO: define operand schema, dependency rules, graph format, and issue-width model.
+TODO: define the trace format, dependency rules, graph format, latency assumptions, and reproducible commands.
 
-## Instructions
+## Investigate
 
-Coming Soon. No tracing or dependency implementation is included yet.
+Compare sequential work with the longest dependency chain. Explain which dependencies are visible from the trace and which machine constraints are absent from an ideal ILP estimate.
 
-## Expected Observations
+## What to Look For
 
-Students should eventually compare sequential work with the longest dependency chain and explain why ideal ILP is not a direct prediction of measured throughput. No numerical results are asserted yet.
+No numerical result is asserted yet. The future implementation should show how a critical path emerges from the trace and which assumptions connect it to an issue-width estimate.
 
-## Questions for Students
+## Challenge Questions
 
 - Which dependencies are visible from register operands alone?
 - How do loads, stores, and control flow complicate the model?
 - What assumptions connect a critical path to an issue-width estimate?
 
-## Further Exploration
+## Deep Dive
 
-TODO: compare workloads and add latency or functional-unit constraints.
+Compare workloads and add latency or functional-unit constraints. Treat every added constraint as a modelling decision that needs justification.

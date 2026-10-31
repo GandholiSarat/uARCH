@@ -1,5 +1,5 @@
-# Final Challenge
+# Final Performance Challenge
 
-**Status: Coming Soon**
+**Status: In development**
 
-The final challenge will combine instrumentation, workload selection, analysis, and a defensible microarchitectural model. The assignment, rubric, and reference material will be added in a later iteration.
+Combine instrumentation, workload selection, analysis, and a defensible microarchitectural model. The challenge brief, assessment rubric, and reference material will arrive in a later iteration.

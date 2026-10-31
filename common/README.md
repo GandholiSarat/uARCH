@@ -1,10 +1,10 @@
-# Common Infrastructure
+# Shared Infrastructure
 
 This directory is the shared home for future DynamoRIO clients, helper headers, source files, and build utilities. The current repository intentionally contains no instrumentation implementation.
 
-## Adding a client
+## Build Boundary
 
-A future client should be a focused subdirectory with its own target in a CMake project. Configure the shared project with:
+Keep each future client focused and give it its own CMake target. Configure the shared project with:
 
 ```bash
 cmake -S common -B build/common -DDynamoRIO_DIR="$DYNAMORIO_HOME/cmake"

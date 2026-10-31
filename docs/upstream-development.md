@@ -1,6 +1,6 @@
-# Optional Upstream DynamoRIO Development
+# Deep Dive: Upstream DynamoRIO Development
 
-The normal student setup uses the pinned official prebuilt package. Developers who need an unreleased feature can maintain a separate source build without changing the uARCH setup policy.
+The normal uARCH setup uses the pinned official prebuilt package. When an unreleased feature matters to an investigation, maintain a separate source build without changing the setup policy.
 
 ## Clone and configure
 
@@ -14,4 +14,4 @@ export DYNAMORIO_HOME="$HOME/src/dynamorio/build"
 
 Use the upstream repository's own build documentation for additional options and supported host requirements. Keep this checkout outside the uARCH repository and do not commit its binaries. Before sharing an experiment, record the upstream commit, compiler, CMake version, and relevant build options so another developer can reproduce it.
 
-This path is intentionally optional. Students should use `./setup.sh` and the pinned release unless an exercise explicitly requires an unreleased feature.
+This path is intentionally optional. Use `./setup.sh` and the pinned release unless an investigation explicitly requires an unreleased feature.

@@ -1,10 +1,10 @@
 # Installation
 
-## Primary platform
+## Before You Start
 
-The lab targets 64-bit Ubuntu Linux. macOS and other Unix-like systems can be useful for documentation and workload development, but DynamoRIO support and the scripts should be verified on the student's machine.
+The primary runtime target is 64-bit Ubuntu Linux. macOS and other Unix-like systems can support documentation and workload development, but verify DynamoRIO support on the target machine before tracing.
 
-## Host packages
+## Install the Foundation
 
 ```bash
 sudo apt update
@@ -31,7 +31,7 @@ export DYNAMORIO_HOME=/path/to/DynamoRIO-Linux-11.91.20756
 
 The expected installation contains `bin64/drrun`, `tools/drcachesim.drrun64`, `include/dr_api.h`, `cmake/DynamoRIOConfig.cmake`, and `lib64/release/libdynamorio.so`.
 
-## Verify
+## Verify the Environment
 
 ```bash
 ./setup.sh

@@ -1,8 +1,8 @@
-# DynamoRIO Introduction
+# Explore DynamoRIO
 
 DynamoRIO is a dynamic binary instrumentation framework. It observes and optionally transforms machine-code execution at runtime, allowing a client to inspect instructions, basic blocks, memory references, and control flow without changing the original source program.
 
-For this lab, the important distinction is:
+Keep these three layers distinct:
 
 - **Static analysis** reasons about the binary or source without running it.
 - **Dynamic instrumentation** observes the paths and events that actually occur for a particular input.

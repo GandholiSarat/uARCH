@@ -2,13 +2,15 @@
 
 ## Microarchitecture Exploration Lab
 
-**From Real Program Execution to Microarchitectural Insights**
+**From Real Execution to Microarchitectural Insights**
 
 [![Platform](https://img.shields.io/badge/platform-Ubuntu%20Linux-E95420.svg)](docs/installation.md)
 [![Tooling](https://img.shields.io/badge/instrumentation-DynamoRIO-2F6DB0.svg)](docs/dynamorio-introduction.md)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
-uARCH is a hands-on Advanced Computer Architecture lab for M.Tech students, architecture students, systems researchers, and anyone curious about how real programs execute on modern processors. The repository provides environment setup, small workloads, reusable scaffolding, and a completed first tracing exercise. Labs 2-4 will be added in later iterations.
+Don't just run the code. Investigate it.
+
+uARCH is a hands-on performance engineering lab for M.Tech computer science students, architecture students, systems researchers, and aspiring performance engineers. Trace real workloads, explore execution behaviour, build analysis tools, and find the performance story hidden inside the instruction stream. Lab 1 is the first guided investigation; Labs 2-4 will follow.
 
 > **Instrument -> Observe -> Analyze -> Model -> Understand**
 
@@ -24,9 +26,9 @@ flowchart TD
     D --> E[Microarchitectural Insights]
 ```
 
-## Learning Objectives
+## What You'll Explore
 
-By the end of the lab, students should be able to:
+Across the lab series, you will:
 
 - Build and run small, deterministic workloads.
 - Explain the role of dynamic binary instrumentation.
@@ -35,11 +37,11 @@ By the end of the lab, students should be able to:
 - State assumptions and limitations when moving from traces to models.
 - Extend a shared DynamoRIO client structure with a focused experiment.
 
-## Laboratory Exercises
+## Lab Map
 
 | Lab | Focus | Status |
 | --- | --- | --- |
-| [01 - Instruction Profiling](lab01-instruction-profiling/README.md) | Student-driven dynamic instruction tracing and workload analysis | Guided investigation |
+| [01 - Instruction Profiling](lab01-instruction-profiling/README.md) | Dynamic instruction tracing and workload analysis | Guided investigation |
 | [02 - Branch Prediction](lab02-branch-prediction/README.md) | Branch traces and always-taken, 1-bit, and 2-bit predictors | Template |
 | [03 - Cache Locality](lab03-cache-locality/README.md) | `drcachesim`, cache configurations, and locality | Template |
 | [04 - Dynamic ILP](lab04-dynamic-ilp/README.md) | Operands, dependencies, critical paths, and ideal issue width | Template |
@@ -48,7 +50,7 @@ By the end of the lab, students should be able to:
 
 The lab connects execution traces with dynamic instruction mix, basic blocks, hot paths, branches, prediction accuracy, cache capacity and associativity, cache lines, locality, register dependencies, dependency graphs, critical paths, and idealized instruction-level parallelism. Results must always be interpreted in the context of the workload, compiler, binary, input, and machine.
 
-## Prerequisites
+## Before You Start
 
 - Basic C/C++ and command-line experience.
 - Familiarity with compilation and processes.
@@ -68,7 +70,7 @@ cd uARCH
 ./test.sh
 ```
 
-`DYNAMORIO_HOME` can be set to use an existing custom installation. See [installation](docs/installation.md), [getting started](docs/getting-started.md), and [troubleshooting](docs/troubleshooting.md) for details. The current setup validates prerequisites and creates local workspace directories; Lab 1 uses the official `instrace_simple` sample, while Labs 2-4 remain templates.
+`DYNAMORIO_HOME` can be set to use an existing custom installation. See [installation](docs/installation.md), [getting started](docs/getting-started.md), and [when things break](docs/troubleshooting.md) for details. The current setup validates the environment and creates local workspace directories; Lab 1 uses the official `instrace_simple` sample, while Labs 2-4 remain templates.
 
 ## Repository Layout
 

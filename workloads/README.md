@@ -1,6 +1,6 @@
-# Workloads
+# Workload Bench
 
-These directories reserve future shared workloads for later labs. Lab 1 keeps its four teaching programs together under `lab01-instruction-profiling/workloads/` so students have one simple place to start. Workloads should be easy to compile, use fixed inputs, and expose one architectural question at a time.
+These directories reserve future shared workloads for later labs. Lab 1 keeps its four teaching programs together under `lab01-instruction-profiling/workloads/` so the starting point stays simple. Workloads should be easy to compile, use fixed inputs, and expose one architectural question at a time.
 
 | Workload | Intended behavior |
 | --- | --- |

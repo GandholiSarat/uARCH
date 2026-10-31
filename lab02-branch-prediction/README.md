@@ -2,40 +2,43 @@
 
 **Status: Under development**
 
-## Objective
+## Mission Brief
 
-Trace dynamic branches and evaluate always-taken, 1-bit, and 2-bit saturating-counter predictors.
+Trace dynamic branch behaviour and build a compact predictor model. The goal is to connect branch patterns, predictor state, and accuracy to the control flow you can observe in real workloads.
 
-## Background
+## What You'll Explore
 
-Branches create control-flow decisions. Predictors use recent history to guess an outcome so execution can continue speculatively; prediction accuracy depends on the branch pattern and predictor state.
+- Branch outcomes and dynamic control flow.
+- Always-taken, 1-bit, and 2-bit saturating-counter predictors.
+- Warm-up behaviour, hysteresis, and prediction accuracy.
+- The difference between a trace-derived model and hardware behaviour.
 
-## Architecture Concepts
+## Before You Start
 
-Branch outcomes, prediction accuracy, predictor state, warm-up behavior, and hysteresis in saturating counters.
+Complete the root setup. The finished investigation will require DynamoRIO, a branch-tracing client, deterministic workloads, and a Python analysis tool. This lab is not implemented yet.
 
-## Prerequisites and Tools
+## Explore
 
-Complete the root setup. Future work will require DynamoRIO, a branch-tracing client, deterministic workloads, and a Python analysis tool.
+Start with a workload that produces a visible pattern of taken and not-taken branches. Identify what information a branch trace must preserve and how predictor initialization affects the first predictions.
 
-## Experiment Overview
+## Build and Run
 
-TODO: define trace format, predictor initialization, and workload matrix.
+TODO: define the trace format, predictor initialization, workload matrix, and reproducible commands.
 
-## Instructions
+## Investigate
 
-Coming Soon. No predictor implementation is included yet.
+Compare prediction accuracy across patterns. Explain why a 2-bit counter can resist a single unusual outcome and identify which details are lost when outcomes are aggregated.
 
-## Expected Observations
+## What to Look For
 
-Students should eventually compare predictor accuracy across patterns and explain why two-bit state can resist a single unusual outcome. No numerical results are asserted yet.
+No numerical result is asserted yet. The future implementation should make warm-up, per-branch behaviour, and predictor state visible rather than presenting one unexplained accuracy number.
 
-## Questions for Students
+## Challenge Questions
 
 - Which patterns defeat an always-taken predictor?
 - How does initialization affect reported accuracy?
-- What information is lost when outcomes are aggregated?
+- What information disappears when branch outcomes are aggregated?
 
-## Further Exploration
+## Deep Dive
 
-TODO: compare per-branch and global histories.
+Compare per-branch history with global history and test patterns that have the same taken rate but different orderings.

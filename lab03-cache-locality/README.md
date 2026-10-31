@@ -1,41 +1,44 @@
-# Lab 3: Cache & Memory Locality
+# Lab 3: Cache and Memory Locality
 
 **Status: Under development**
 
-## Objective
+## Mission Brief
 
-Use DynamoRIO `drcachesim` to study cache configurations, locality, and hit/miss behavior.
+Use DynamoRIO `drcachesim` to investigate how working sets and access order interact with cache capacity, associativity, and line size.
 
-## Background
+## What You'll Explore
 
-Caches exploit temporal and spatial locality. Capacity, associativity, and cache-line size influence which accesses hit or miss for a given working set and access order.
+- Temporal and spatial locality.
+- L1/L2 behaviour, capacity, associativity, and cache lines.
+- Compulsory and conflict effects.
+- The boundary between simulator output and hardware measurement.
 
-## Architecture Concepts
+## Before You Start
 
-L1/L2 behavior, cache capacity, associativity, line size, compulsory and conflict effects, and temporal versus spatial locality.
+Complete the root setup and verify `drcachesim`. The finished investigation will require simulator configurations, deterministic workloads, and analysis scripts. This lab is not implemented yet.
 
-## Prerequisites and Tools
+## Explore
 
-Complete the root setup and verify `drcachesim`. Future work will require simulator configuration files, deterministic workloads, and analysis scripts.
+Begin with workloads that vary one property at a time: working-set size, access order, stride, or reuse distance. State the simulator assumptions before interpreting a hit or miss count.
 
-## Experiment Overview
+## Build and Run
 
 TODO: add supported configurations, command lines, and output interpretation.
 
-## Instructions
+## Investigate
 
-Coming Soon. No cache experiment is implemented yet.
+Compare access patterns and configuration changes. Separate capacity pressure from conflict behaviour, and do not present simulator output as a measurement that applies to every CPU.
 
-## Expected Observations
+## What to Look For
 
-Students should eventually compare access patterns and configuration changes while separating simulator assumptions from hardware measurements. No numerical results are asserted yet.
+No numerical result is asserted yet. The future implementation should make cache configuration and workload assumptions visible alongside every finding.
 
-## Questions for Students
+## Challenge Questions
 
-- Which changes alter capacity pressure versus conflict behavior?
+- Which changes alter capacity pressure versus conflict behaviour?
 - How does line size affect spatial locality?
-- Why should simulator results not be presented as measurements of every CPU?
+- Why should simulator output not be presented as a measurement of every CPU?
 
-## Further Exploration
+## Deep Dive
 
-TODO: investigate multi-level cache interactions and working-set transitions.
+Investigate multi-level cache interactions, working-set transitions, and whether two access patterns with similar hit rates produce different architectural stories.
