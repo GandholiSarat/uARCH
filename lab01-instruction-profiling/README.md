@@ -78,35 +78,27 @@ You may write a custom C workload when it gives you a better performance questio
 
 ## Run
 
-The sample source is maintained by DynamoRIO, so you can inspect and build it directly from the official repository. Use the latest release tag resolved by the official Releases API:
+After building workloads, run DynamoRIO like this:
 
 ```bash
-export DYNAMORIO_HOME="$PWD/dynamorio"
-export DR_SOURCE="$HOME/src/dynamorio"
-export DR_BUILD="$HOME/build/dynamorio-samples"
-export DR_TAG="$(curl -fsSL https://api.github.com/repos/DynamoRIO/dynamorio/releases/latest | python3 -c 'import json, sys; print(json.load(sys.stdin)["tag_name"])')"
-
-git clone --branch "$DR_TAG" --depth 1 \
-    https://github.com/DynamoRIO/dynamorio.git "$DR_SOURCE"
-cmake -S "$DR_SOURCE/api/samples" -B "$DR_BUILD" \
-    -DDynamoRIO_DIR="$DYNAMORIO_HOME/cmake"
-cmake --build "$DR_BUILD" --target instrace_simple --parallel
-
-find "$DR_BUILD" -type f -name 'libinstrace_simple.so' -print
+../dynamorio/bin64/drrun -c ../dynamorio/samples/bin64/libinstrace_simple.so -- ./build/workloads/linked_list
 ```
 
-Build the workloads first, then run the sample directly:
+Anything after `--` is your workload command. You can replace it with any workload binary and arguments, for example:
 
 ```bash
-mkdir -p traces
-CLIENT="$(find "$DR_BUILD" -type f -name 'libinstrace_simple.so' -print -quit)"
-"$DYNAMORIO_HOME/bin64/drrun" \
-    -quiet -logdir "$PWD/traces" \
-    -c "$CLIENT" -- \
-    "$PWD/build/workloads/matrix_multiplication" 8
+../dynamorio/bin64/drrun -c ../dynamorio/samples/bin64/libinstrace_simple.so -- ./build/workloads/matrix_multiplication 8
 ```
 
-Inspect every generated `instrace*` file before writing your analyser. Keep a small representative trace or record exact reproducible generation commands. The sample writes per-thread files and has no instruction-count limit; control size with workload inputs. Do not silently truncate or merge away evidence.
+This creates a trace log file, for example:
+
+```text
+Data file /path/to/dynamorio/samples/bin64/instrace.linked_list.<pid>.0000.log created
+```
+
+The exact path depends on your machine and current working directory.
+
+Use the generated `instrace.*.log` file as input to your analyser in `trace_analyser.py`.
 
 ## Investigate
 
