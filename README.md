@@ -10,7 +10,7 @@
 
 Don't just run the code. Investigate it.
 
-uARCH is a hands-on performance engineering lab for M.Tech computer science students, architecture students, systems researchers, and aspiring performance engineers. Trace real workloads, explore execution behaviour, build analysis tools, and find the performance story hidden inside the instruction stream. Lab 1 is the first guided investigation; Labs 2-4 will follow.
+uARCH is a hands-on microarchitecture lab for architecture enthusiasts. Trace real workloads, explore execution behaviour, build analysis tools, and find the performance story hidden inside the instruction stream. Lab 1 is the first guided investigation; Labs 2-4 will follow.
 
 > **Instrument -> Observe -> Analyze -> Model -> Understand**
 

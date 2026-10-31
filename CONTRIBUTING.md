@@ -1,6 +1,6 @@
 # Contributing
 
-Thank you for helping improve uARCH. This is a hands-on performance engineering repository, so clarity and reproducibility matter as much as code correctness.
+Thank you for helping improve uARCH. This is a hands-on architecture repository, so clarity and reproducibility matter as much as code correctness.
 
 ## Guidelines
 

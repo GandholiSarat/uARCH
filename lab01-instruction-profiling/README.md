@@ -37,7 +37,7 @@ cd lab01-instruction-profiling
 
 ## Before You Start
 
-Use 64-bit Ubuntu Linux, the pinned DynamoRIO environment, GCC, CMake, Make, and Python 3. The macOS development environment can validate the workload and analyser scaffolding, but real DynamoRIO tracing requires Ubuntu x86-64.
+Use 64-bit Ubuntu Linux, the pinned DynamoRIO environment, GCC, CMake, Make, and Python 3.
 
 ## What the Trace Contains
 
