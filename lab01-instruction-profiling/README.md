@@ -11,7 +11,8 @@ Students do **not** write a DynamoRIO client here. The instrumentation comes fro
 Read the official resources first:
 
 - [DynamoRIO repository](https://github.com/DynamoRIO/dynamorio)
-- [DynamoRIO documentation](https://dynamorio.org/docs/)
+- [DynamoRIO documentation](https://dynamorio.org)
+- [DynamoRIO API samples documentation](https://dynamorio.org/API_samples.html)
 - [`instrace_simple.c`](https://github.com/DynamoRIO/dynamorio/blob/master/api/samples/instrace_simple.c)
 
 The repository pins a release in the root `dynamorio-version.txt`. Set up the environment from the repository root, then return here:
