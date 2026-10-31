@@ -111,8 +111,4 @@ Answer all ten questions in [questions.md](questions.md) for each selected workl
 
 AI assistance is allowed for documentation, workload code, parser code, and debugging. You must understand your own parsing logic, data structures, classification rules, and results. Be prepared to explain one function, modify one metric, and defend one conclusion from your trace.
 
-## Optional Advanced Work
 
-After the primary path, inspect `instrace_x86.c` and consider what richer operands or memory-reference information would enable. Do not implement Labs 2, 3, or 4 here.
-
-The maintainer's macOS environment can validate the workload and analyser scaffolding, but the pinned Linux DynamoRIO client build and real trace generation require Ubuntu x86-64.
