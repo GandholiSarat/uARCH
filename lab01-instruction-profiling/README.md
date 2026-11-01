@@ -109,31 +109,41 @@ Run your trace files through [trace_analyser.py](trace_analyser.py):
 python3 trace_analyser.py /path/to/instrace.*.log
 ```
 
-The analyser already parses the trace and reports:
-1. Total dynamic instructions.
-2. Unique instruction addresses and opcodes.
-3. Opcode frequency and top instruction PCs.
+The analyser provides baseline trace parsing and initial metrics:
+
+1. **Total dynamic instructions**
+2. **Unique instruction addresses and opcodes**
+3. **Opcode frequency and top instruction PCs**
 
 ### Your Task
 
-Extend [trace_analyser.py](trace_analyser.py) to complete the remaining TODOs:
-4. **Categorise opcodes and classify workloads**: Implement `categorize_opcode()` and `classify_workload()`.
-5. **Compare across workloads and input sizes**: Trace multiple workloads at different input sizes and analyse how the instruction profile changes.
+Extend [trace_analyser.py](trace_analyser.py) to complete the remaining parts of the investigation:
 
-Keep the analyser honest. For example, an opcode-only trace cannot reliably identify every `mov` as a load, store, or register move. It also cannot prove cache behaviour or branch prediction accuracy.
+4. **Categorise opcodes and classify workloads**: Implement `categorize_opcode()` to group instructions into functional categories (control flow, arithmetic, memory, etc.) and `classify_workload()` to determine workload characteristics from the instruction mix.
+5. **Compare across workloads and input sizes**: Trace multiple workloads across different input sizes and analyse how the dynamic instruction profile changes.
+
+> **Note**: Keep the analyser honest. An opcode-only trace cannot reliably identify every `mov` as a load, store, or register-to-register move. It also cannot prove cache behaviour or branch prediction accuracy without memory operands and hardware events.
 
 ## Challenge Questions
 
-Answer all ten questions in [questions.md](questions.md) for each selected workload.
+Answer the investigation and decision questions in [questions.md](questions.md):
+- **Part 1 (Workload Characterisation)**: Answer Questions 1–5 for each selected workload using your trace measurements and analyser output.
+- **Part 2 (Real-World Performance Decisions)**: Answer Questions 6–10 using architectural reasoning and the provided scenario data.
 
 ## What to Ship
 
-Ship the workload source and build commands, DynamoRIO commands, your analyser, a representative trace or reproducible trace instructions, and evidence-backed findings about what the trace can and cannot reveal.
+Ship the workload source and build commands, DynamoRIO commands, your analyser, a representative trace or reproducible trace instructions, and evidence-backed findings answering [questions.md](questions.md).
 
+Exploring at least one open-source real-world workload (such as the [STREAM benchmark](https://www.cs.virginia.edu/stream/) or standard Unix utilities) is highly recommended. Record its build commands, optimization flags (e.g., `-O0` vs `-O2`/`-O3`), dynamic instruction counts, and architectural observations alongside the starter workloads.
+
+AI can help you write docs, cook up workloads, build parsers, and debug your code. But don't let AI become the actual computer architect while you're just the spectator. You need to understand what your code does, how your parser thinks, why your metrics look the way they do, and what your trace is actually telling you. Be ready to explain a function, change a metric, and defend your conclusions.
 
 ## Deep Dive
 
-Extend your investigation beyond synthetic microbenchmarks to real-world workloads, such as the [STREAM benchmark](https://www.cs.virginia.edu/stream/) or standard Unix utilities. Observe how memory-intensive streaming kernels, compiler vectorisation, and optimization levels (e.g., `-O0` vs `-O2`/`-O3`) impact dynamic instruction count, loop structures, and opcode distributions.
+Run an open-source real-world workload (like STREAM or Unix utilities) and explore:
+
+- **Compiler Transformations**: Trace workloads across `-O0`, `-O2`, and `-O3 -march=native`. Dissect how auto-vectorisation (AVX2/AVX-512 vs scalar ALU), loop unrolling, and streaming stores reshape the dynamic opcode mix and PC locality.
+- **The Limits of Dynamic Instruction Counts**: Demonstrate cases where an optimized binary executes $4\times$ fewer dynamic instructions yet stalls on memory bandwidth or front-end fetch, proving why instruction counts alone do not dictate execution time.
 
 ## Key Takeaways
 
