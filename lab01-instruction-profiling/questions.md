@@ -8,7 +8,7 @@ Answer every question based on your workload measurements, trace analysis, and a
 
 ### Question 1: Dynamic Execution Scaling vs. Static Code Footprint
 Compare the static instruction count in the compiled binary (e.g., using `objdump -d` or `size`) with the dynamic instruction count from your trace.
-- How does the dynamic instruction count scale as you increase workload input sizes (e.g., $N=8, 16, 64$)? Is the growth linear, polynomial ($O(N^2), O(N^3)$), or logarithmic?
+- How does the dynamic instruction count scale as you increase workload input sizes (e.g., `N = 8, 16, 64`)? Is the growth linear, polynomial (`O(N^2)`, `O(N^3)`), or logarithmic?
 - Explain how inner-loop execution and repetition explain the gap between static and dynamic instruction counts.
 
 ### Question 2: Dominant Opcodes & Computational Characterisation
@@ -58,7 +58,7 @@ Identify the boundary between what an opcode/PC trace can prove and what require
 
 **Decision & Analysis**:
 1. How does the extreme PC concentration guide your optimization strategy (e.g., compiler flags `-O3 -mavx2`, loop vectorisation, or handwritten intrinsics)?
-2. If vectorising with 256-bit AVX2 reduces dynamic instruction count in the hot loop by $4\times$, estimate the new dynamic instruction count and explain how you decide whether a dedicated NPU/GPU accelerator is necessary.
+2. If vectorising with 256-bit AVX2 reduces dynamic instruction count in the hot loop by 4x, estimate the new dynamic instruction count and explain how you decide whether a dedicated NPU/GPU accelerator is necessary.
 
 ---
 
@@ -76,14 +76,14 @@ Identify the boundary between what an opcode/PC trace can prove and what require
 ---
 
 ### Question 9: Scientific Simulation — Compute-Bound vs. Memory-Bound Scaling
-**Scenario**: A grid-based physics simulation (stencil computation) is profiled at two different problem grid sizes ($N=128$ and $N=4096$).
+**Scenario**: A grid-based physics simulation (stencil computation) is profiled at two different problem grid sizes (`N = 128` and `N = 4096`).
 **Trace & Profiler Data**:
-- At $N=128$: 18 million dynamic instructions, 50% arithmetic, 35% memory, 15% control flow. Execution time: 5 ms.
-- At $N=4096$: 72 billion dynamic instructions ($4000\times$ increase, matching $O(N^3)$ computational scaling), identical opcode percentage breakdown. Execution time: 140 seconds ($28,000\times$ increase).
-- Measured cycles per instruction (CPI) increases from 0.6 at $N=128$ to 4.2 at $N=4096$.
+- At `N = 128`: 18 million dynamic instructions, 50% arithmetic, 35% memory, 15% control flow. Execution time: 5 ms.
+- At `N = 4096`: 72 billion dynamic instructions (4,000x increase, matching `O(N^3)` computational scaling), identical opcode percentage breakdown. Execution time: 140 seconds (28,000x increase).
+- Measured cycles per instruction (CPI) increases from 0.6 at `N = 128` to 4.2 at `N = 4096`.
 
 **Decision & Analysis**:
-1. While the opcode mix and algorithmic complexity remain constant, why does the execution time scale $7\times$ worse than the instruction count?
+1. While the opcode mix and algorithmic complexity remain constant, why does the execution time scale 7x worse than the instruction count?
 2. How does this data guide your decision between software restructuring (cache blocking/tiling) versus purchasing hardware with higher memory bandwidth (HBM / multi-channel DDR5)?
 
 ---

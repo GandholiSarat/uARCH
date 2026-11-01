@@ -143,7 +143,7 @@ AI can help you write docs, cook up workloads, build parsers, and debug your cod
 Run an open-source real-world workload (like STREAM or Unix utilities) and explore:
 
 - **Compiler Transformations**: Trace workloads across `-O0`, `-O2`, and `-O3 -march=native`. Dissect how auto-vectorisation (AVX2/AVX-512 vs scalar ALU), loop unrolling, and streaming stores reshape the dynamic opcode mix and PC locality.
-- **The Limits of Dynamic Instruction Counts**: Demonstrate cases where an optimized binary executes $4\times$ fewer dynamic instructions yet stalls on memory bandwidth or front-end fetch, proving why instruction counts alone do not dictate execution time.
+- **The Limits of Dynamic Instruction Counts**: Demonstrate cases where an optimized binary executes 4x fewer dynamic instructions yet stalls on memory bandwidth or front-end fetch, proving why instruction counts alone do not dictate execution time.
 
 ## Key Takeaways
 
