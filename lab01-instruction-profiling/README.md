@@ -78,9 +78,10 @@ You may write a custom C workload when it gives you a better performance questio
 
 ## Run
 
-After building workloads, run DynamoRIO like this:
+Make sure you are in the `lab01-instruction-profiling` directory, then run DynamoRIO with your built workloads:
 
 ```bash
+cd lab01-instruction-profiling
 ../dynamorio/bin64/drrun -c ../dynamorio/samples/bin64/libinstrace_simple.so -- ./build/workloads/linked_list
 ```
 
@@ -102,14 +103,22 @@ Use the generated `instrace.*.log` file as input to your analyser in `trace_anal
 
 ## Investigate
 
-Write your own analyser in [trace_analyser.py](trace_analyser.py). Begin by parsing the header and `PC,opcode` records, then add measurements in stages:
+Run your trace files through [trace_analyser.py](trace_analyser.py):
 
+```bash
+python3 trace_analyser.py /path/to/instrace.*.log
+```
+
+The analyser already parses the trace and reports:
 1. Total dynamic instructions.
 2. Unique instruction addresses and opcodes.
 3. Opcode frequency and top instruction PCs.
-4. Broad categories with documented rules and an explicit unknown fallback.
-5. CSV summaries and charts.
-6. Comparisons across workloads and input sizes.
+
+### Your Task
+
+Extend [trace_analyser.py](trace_analyser.py) to complete the remaining TODOs:
+4. **Categorise opcodes and classify workloads**: Implement `categorize_opcode()` and `classify_workload()`.
+5. **Compare across workloads and input sizes**: Trace multiple workloads at different input sizes and analyse how the instruction profile changes.
 
 Keep the analyser honest. For example, an opcode-only trace cannot reliably identify every `mov` as a load, store, or register move. It also cannot prove cache behaviour or branch prediction accuracy.
 
@@ -119,13 +128,12 @@ Answer all ten questions in [questions.md](questions.md) for each selected workl
 
 ## What to Ship
 
-Ship the workload source and build commands, DynamoRIO commands, your analyser, a representative trace or reproducible trace instructions, CSVs/charts, and evidence-backed findings about what the trace can and cannot reveal.
+Ship the workload source and build commands, DynamoRIO commands, your analyser, a representative trace or reproducible trace instructions, and evidence-backed findings about what the trace can and cannot reveal.
 
-AI assistance is allowed for documentation, workload code, parser code, and debugging. You must understand your own parsing logic, data structures, classification rules, and results. Be prepared to explain one function, modify one metric, and defend one conclusion from your trace.
 
 ## Deep Dive
 
-After the primary path, inspect `instrace_x86.c` and consider what richer operands or memory-reference information would enable. Do not implement Labs 2, 3, or 4 here.
+Extend your investigation beyond synthetic microbenchmarks to real-world workloads, such as the [STREAM benchmark](https://www.cs.virginia.edu/stream/) or standard Unix utilities. Observe how memory-intensive streaming kernels, compiler vectorisation, and optimization levels (e.g., `-O0` vs `-O2`/`-O3`) impact dynamic instruction count, loop structures, and opcode distributions.
 
 ## Key Takeaways
 
